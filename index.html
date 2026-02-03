@@ -3,30 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Révision Dev Web - QCM Complet</title>
+    <title>QCM Web Dev - 100 Questions Uniques</title>
     <style>
         :root {
             --primary: #2c3e50;
             --accent: #3498db;
             --success: #27ae60;
-            --error: #c0392b;
-            --light: #ecf0f1;
-            --text: #333;
+            --error: #e74c3c;
+            --bg: #f8f9fa;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
             display: flex;
             height: 100vh;
-            color: var(--text);
-            background-color: #f4f6f7;
+            background-color: var(--bg);
+            color: #333;
         }
 
         /* Sidebar */
         aside {
-            width: 250px;
-            background-color: var(--primary);
+            width: 260px;
+            background: var(--primary);
             color: white;
             display: flex;
             flex-direction: column;
@@ -36,55 +35,55 @@
         }
 
         aside h2 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
             border-bottom: 2px solid var(--accent);
             padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            text-align: center;
         }
 
         .category-btn {
-            background: none;
+            background: rgba(255,255,255,0.05);
             border: none;
             color: #bdc3c7;
             text-align: left;
-            padding: 12px;
+            padding: 12px 15px;
             cursor: pointer;
-            font-size: 1rem;
-            border-radius: 5px;
-            transition: 0.3s;
-            margin-bottom: 5px;
-            width: 100%;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            transition: 0.2s;
+            display: flex;
+            justify-content: space-between;
         }
 
         .category-btn:hover, .category-btn.active {
-            background-color: var(--accent);
+            background: var(--accent);
             color: white;
             font-weight: bold;
         }
 
-        /* Main Content */
+        /* Main */
         main {
             flex: 1;
-            padding: 40px;
+            padding: 30px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
+            align-items: flex-start;
             overflow-y: auto;
         }
 
-        .quiz-container {
+        .quiz-card {
             background: white;
             width: 100%;
             max-width: 800px;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .header-quiz {
             display: flex;
             justify-content: space-between;
-            align-items: center;
             margin-bottom: 20px;
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
@@ -99,367 +98,340 @@
             font-weight: bold;
         }
 
-        h3.question-text {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
-            line-height: 1.5;
-            min-height: 60px;
+        h3 {
+            min-height: 50px;
+            color: #2c3e50;
+            font-size: 1.25rem;
         }
 
-        /* Options */
         .options-grid {
             display: grid;
-            gap: 15px;
+            gap: 12px;
         }
 
         .option-btn {
-            background: var(--light);
-            border: 2px solid transparent;
+            background: #fff;
+            border: 2px solid #e9ecef;
             padding: 15px;
-            text-align: left;
-            font-size: 1rem;
             border-radius: 8px;
+            text-align: left;
             cursor: pointer;
+            font-size: 1rem;
             transition: 0.2s;
-            position: relative;
+            color: #495057;
         }
 
         .option-btn:hover:not(:disabled) {
-            background: #dfe6e9;
-            border-color: #bdc3c7;
+            border-color: var(--accent);
+            background: #f1f8ff;
         }
 
-        /* States */
         .option-btn.correct {
-            background-color: #d4edda;
-            border-color: var(--success);
-            color: var(--success);
+            background-color: #d1e7dd !important;
+            border-color: var(--success) !important;
+            color: #0f5132 !important;
         }
 
         .option-btn.incorrect {
-            background-color: #f8d7da;
-            border-color: var(--error);
-            color: var(--error);
+            background-color: #f8d7da !important;
+            border-color: var(--error) !important;
+            color: #842029 !important;
         }
 
-        /* Footer / Navigation */
+        /* Footer */
         .quiz-footer {
-            margin-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-
-        .quiz-footer.visible {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .explanation {
-            font-style: italic;
-            color: #555;
-            background: #f9f9f9;
+            margin-top: 25px;
+            display: none;
+            background: #f8f9fa;
             padding: 15px;
+            border-radius: 8px;
             border-left: 4px solid var(--accent);
-            flex: 1;
-            margin-right: 20px;
-            border-radius: 4px;
         }
+
+        .quiz-footer.visible { display: block; }
 
         .next-btn {
-            background-color: var(--primary);
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            cursor: pointer;
+            padding: 12px 24px;
+            border-radius: 6px;
             font-size: 1rem;
-            white-space: nowrap;
+            cursor: pointer;
+            float: right;
+            margin-top: 10px;
         }
 
-        .next-btn:hover {
-            background-color: #34495e;
-        }
+        .next-btn:hover { background: #34495e; }
 
-        /* Mobile Responsive */
         @media (max-width: 768px) {
             body { flex-direction: column; }
-            aside { width: 100%; height: auto; flex-direction: row; overflow-x: auto; padding: 10px; box-sizing: border-box; }
+            aside { width: 100%; height: auto; flex-direction: row; overflow-x: auto; padding: 10px; }
             aside h2 { display: none; }
-            .category-btn { margin-right: 10px; white-space: nowrap; width: auto; padding: 8px 15px; }
+            .category-btn { margin-right: 10px; white-space: nowrap; padding: 8px 12px; }
             main { padding: 15px; }
-            .quiz-footer { flex-direction: column; align-items: stretch; }
-            .explanation { margin-right: 0; margin-bottom: 15px; }
-            .next-btn { width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <aside>
-        <h2>Thématiques</h2>
-        <div id="category-list">
-            </div>
-    </aside>
+<aside>
+    <h2>⚡ Révision Web</h2>
+    <div id="category-list"></div>
+</aside>
 
-    <main>
-        <div class="quiz-container">
-            <div class="header-quiz">
-                <span class="badge" id="current-category">Chargement...</span>
-                <span id="score-display">Score: 0 / 0</span>
-            </div>
-
-            <h3 class="question-text" id="question-text">Sélectionnez une catégorie pour commencer</h3>
-
-            <div class="options-grid" id="options-container">
-                </div>
-
-            <div class="quiz-footer" id="quiz-footer">
-                <div class="explanation" id="explanation-text"></div>
-                <button class="next-btn" onclick="nextQuestion()">Question Suivante →</button>
-            </div>
+<main>
+    <div class="quiz-card">
+        <div class="header-quiz">
+            <span class="badge" id="category-badge">...</span>
+            <span style="font-weight:bold; color:var(--primary)" id="score-box">Score: 0</span>
         </div>
-    </main>
 
-    <script>
-        // --- DONNÉES COMPLÈTES (76 Questions) ---
-        const allQuestions = [
-            // --- FLEXBOX ---
-            { id: "Q001", category: "Flexbox", question: "Quel est l’axe principal par défaut d’un conteneur Flexbox ?", options: { a: "Vertical", b: "Horizontal", c: "Diagonal", d: "Transversal" }, correct: "b", explanation: "Par défaut, flex-direction est à 'row', donc l'axe est horizontal." },
-            { id: "Q002", category: "Flexbox", question: "Quelle propriété permet d’aligner les éléments sur l’axe principal ?", options: { a: "align-items", b: "align-content", c: "justify-content", d: "align-self" }, correct: "c", explanation: "" },
-            { id: "Q003", category: "Flexbox", question: "Quelle valeur centre les éléments horizontalement ?", options: { a: "flex-start", b: "flex-end", c: "center", d: "stretch" }, correct: "c", explanation: "" },
-            { id: "Q004", category: "Flexbox", question: "Comment empêcher un élément flex de rétrécir ?", options: { a: "flex-grow: 0;", b: "flex-shrink: 0;", c: "flex-wrap: nowrap;", d: "align-self: center;" }, correct: "b", explanation: "" },
-            { id: "Q005", category: "Flexbox", question: "À quoi sert flex-wrap ?", options: { a: "À aligner les éléments", b: "À changer l’axe principal", c: "À autoriser le retour à la ligne", d: "À définir la taille" }, correct: "c", explanation: "" },
-            { id: "Q006", category: "Flexbox", question: "Quelle propriété définit l’alignement vertical des éléments ?", options: { a: "justify-content", b: "align-items", c: "flex-direction", d: "order" }, correct: "b", explanation: "" },
-            { id: "Q007", category: "Flexbox", question: "Quelle valeur place les éléments en bas du conteneur ?", options: { a: "center", b: "flex-start", c: "flex-end", d: "space-between" }, correct: "c", explanation: "" },
-            { id: "Q008", category: "Flexbox", question: "Quelle propriété s’applique à un seul élément flex ?", options: { a: "align-items", b: "justify-content", c: "align-self", d: "flex-wrap" }, correct: "c", explanation: "" },
-            { id: "Q009", category: "Flexbox", question: "Que fait flex-grow: 1 ?", options: { a: "Empêche le rétrécissement", b: "Agrandit l’élément si l’espace est disponible", c: "Centre l’élément", d: "Fixe la largeur" }, correct: "b", explanation: "" },
-            { id: "Q010", category: "Flexbox", question: "Quelle propriété définit la taille initiale d’un élément flex ?", options: { a: "flex-shrink", b: "flex-grow", c: "flex-basis", d: "width" }, correct: "c", explanation: "" },
-            { id: "Q011", category: "Flexbox", question: "Quelle valeur de justify-content répartit l’espace autour des éléments ?", options: { a: "space-between", b: "space-evenly", c: "space-around", d: "center" }, correct: "c", explanation: "space-around met de l'espace avant le premier et après le dernier élément." },
-            { id: "Q012", category: "Flexbox", question: "Par défaut, les éléments flex sont :", options: { a: "En colonne", b: "En ligne", c: "Empilés verticalement", d: "Cachés" }, correct: "b", explanation: "" },
-            { id: "Q013", category: "Flexbox", question: "Quelle propriété change l’ordre d’affichage des éléments ?", options: { a: "order", b: "flex-wrap", c: "align-self", d: "gap" }, correct: "a", explanation: "" },
-            { id: "Q014", category: "Flexbox", question: "Quelle propriété définit l’espace entre les éléments flex ?", options: { a: "margin", b: "padding", c: "gap", d: "border" }, correct: "c", explanation: "" },
-            { id: "Q015", category: "Flexbox", question: "align-content agit sur :", options: { a: "Les éléments individuels", b: "Les lignes flex (multiline)", c: "L’axe principal", d: "La largeur" }, correct: "b", explanation: "Il ne fonctionne que si flex-wrap est activé." },
-            { id: "Q051", category: "Flexbox", question: "Que produit ce code ? <div style='display:flex; justify-content:center;'>...", options: { a: "Les éléments sont alignés à gauche", b: "Les éléments sont centrés horizontalement", c: "Les éléments sont centrés verticalement", d: "Les éléments sont empilés" }, correct: "b", explanation: "" },
-            { id: "Q052", category: "Flexbox", question: "Quel est l’effet de ce code ? align-items:flex-end;", options: { a: "L’élément est en haut", b: "L’élément est centré", c: "L’élément est en bas", d: "L’élément est caché" }, correct: "c", explanation: "" },
-            { id: "Q053", category: "Flexbox", question: "Comment empêcher cet élément de rétrécir ? (Code)", options: { a: "flex-grow: 0", b: "flex-shrink: 0", c: "align-self: center", d: "flex-wrap: nowrap" }, correct: "b", explanation: "" },
-            { id: "Q054", category: "Flexbox", question: "Quel est l’effet de flex-wrap: wrap ?", options: { a: "Les éléments disparaissent", b: "Les éléments changent de couleur", c: "Les éléments passent à la ligne si nécessaire", d: "Les éléments sont centrés" }, correct: "c", explanation: "" },
-            { id: "Q055", category: "Flexbox", question: "Que fait ce code ? <div style='display:flex; gap:20px;'>", options: { a: "Ajoute une marge extérieure", b: "Ajoute un espace entre les éléments", c: "Centre les éléments", d: "Change la taille" }, correct: "b", explanation: "" },
+        <h3 id="question-text">Chargement...</h3>
+        <div class="options-grid" id="options-container"></div>
 
-            // --- CSS GRID ---
-            { id: "Q016", category: "CSS Grid", question: "Quelle propriété active CSS Grid ?", options: { a: "display: block", b: "display: flex", c: "display: grid", d: "position: grid" }, correct: "c", explanation: "" },
-            { id: "Q017", category: "CSS Grid", question: "Quelle propriété définit les colonnes ?", options: { a: "grid-template-rows", b: "grid-template-columns", c: "grid-auto-rows", d: "grid-gap" }, correct: "b", explanation: "" },
-            { id: "Q018", category: "CSS Grid", question: "Comment créer 3 colonnes égales ?", options: { a: "repeat(3, auto)", b: "repeat(3, 1fr)", c: "3fr", d: "auto auto" }, correct: "b", explanation: "" },
-            { id: "Q019", category: "CSS Grid", question: "Quelle unité représente une fraction de l’espace ?", options: { a: "px", b: "%", c: "fr", d: "em" }, correct: "c", explanation: "" },
-            { id: "Q020", category: "CSS Grid", question: "Quelle propriété définit la taille des lignes automatiques ?", options: { a: "grid-template-rows", b: "grid-auto-rows", c: "grid-row", d: "grid-gap" }, correct: "b", explanation: "" },
-            { id: "Q021", category: "CSS Grid", question: "Quelle propriété permet à un élément de s’étendre sur plusieurs colonnes ?", options: { a: "grid-span", b: "grid-column", c: "grid-area", d: "column-span" }, correct: "b", explanation: "" },
-            { id: "Q022", category: "CSS Grid", question: "Quelle valeur centre le contenu d’une cellule horizontalement ?", options: { a: "start", b: "end", c: "center", d: "stretch" }, correct: "c", explanation: "" },
-            { id: "Q023", category: "CSS Grid", question: "Que fait auto-fit ?", options: { a: "Limite le nombre de colonnes", b: "Ajuste automatiquement le nombre de pistes", c: "Fixe la taille", d: "Supprime les lignes vides" }, correct: "b", explanation: "" },
-            { id: "Q024", category: "CSS Grid", question: "Quelle propriété définit l’espace entre lignes et colonnes ?", options: { a: "margin", b: "padding", c: "gap", d: "border" }, correct: "c", explanation: "" },
-            { id: "Q025", category: "CSS Grid", question: "Quelle propriété aligne les éléments dans une cellule ?", options: { a: "justify-content", b: "justify-items", c: "align-content", d: "place-content" }, correct: "b", explanation: "" },
-            { id: "Q026", category: "CSS Grid", question: "grid-template-rows agit sur :", options: { a: "Les colonnes", b: "Les lignes", c: "Les cellules", d: "Les marges" }, correct: "b", explanation: "" },
-            { id: "Q027", category: "CSS Grid", question: "Quelle valeur étire les éléments par défaut ?", options: { a: "start", b: "end", c: "center", d: "stretch" }, correct: "d", explanation: "" },
-            { id: "Q028", category: "CSS Grid", question: "Quelle propriété permet de nommer une zone ?", options: { a: "grid-area", b: "grid-name", c: "grid-zone", d: "area-grid" }, correct: "a", explanation: "" },
-            { id: "Q029", category: "CSS Grid", question: "Grid est surtout utilisé pour :", options: { a: "Les animations", b: "Les formulaires", c: "Les mises en page complexes (2D)", d: "Les couleurs" }, correct: "c", explanation: "" },
-            { id: "Q030", category: "CSS Grid", question: "Quelle propriété combine align-items et justify-items ?", options: { a: "place-items", b: "grid-align", c: "align-center", d: "place-content" }, correct: "a", explanation: "" },
-            { id: "Q056", category: "CSS Grid", question: "Que fait ce code ? grid-template-columns: 1fr 1fr;", options: { a: "Une seule colonne", b: "Deux colonnes égales", c: "Deux lignes", d: "Trois colonnes" }, correct: "b", explanation: "" },
-            { id: "Q057", category: "CSS Grid", question: "Que fait grid-auto-rows: 150px; ?", options: { a: "Définit la largeur", b: "Définit la hauteur des lignes automatiques", c: "Supprime les lignes", d: "Centre le contenu" }, correct: "b", explanation: "" },
-            { id: "Q058", category: "CSS Grid", question: "Que produit ce code ? display:grid; gap:10px;", options: { a: "Aucun effet", b: "Espacement entre les éléments", c: "Suppression des éléments", d: "Alignement vertical" }, correct: "b", explanation: "" },
-            { id: "Q059", category: "CSS Grid", question: "Comment créer 3 colonnes égales ? (Code)", options: { a: "Faux", b: "grid-template-columns: repeat(3, 1fr);", c: "Crée 3 lignes", d: "Crée 1 colonne" }, correct: "b", explanation: "" },
-            { id: "Q060", category: "CSS Grid", question: "Que fait justify-items: center dans une grille ?", options: { a: "Centre verticalement", b: "Centre horizontalement le contenu dans la cellule", c: "Étire le contenu", d: "Cache l’élément" }, correct: "b", explanation: "" },
+        <div class="quiz-footer" id="footer">
+            <p id="explanation" style="margin: 0 0 10px 0; color: #555;"></p>
+            <button class="next-btn" onclick="nextQuestion()">Suivant ➜</button>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+</main>
 
-            // --- BOOTSTRAP ---
-            { id: "Q031", category: "Bootstrap", question: "Quelle classe rend une image responsive ?", options: { a: "img-responsive", b: "img-fluid", c: "responsive-img", d: "img-auto" }, correct: "b", explanation: "" },
-            { id: "Q032", category: "Bootstrap", question: "Quelle classe crée une ligne Bootstrap ?", options: { a: "col", b: "row", c: "container", d: "grid" }, correct: "b", explanation: "" },
-            { id: "Q033", category: "Bootstrap", question: "Quelle classe cache un élément sur mobile ?", options: { a: "d-sm-none", b: "d-none d-sm-block", c: "d-md-none", d: "hidden" }, correct: "b", explanation: "" },
-            { id: "Q034", category: "Bootstrap", question: "col-md-6 signifie :", options: { a: "6px", b: "6 colonnes sur écran moyen (>=768px)", c: "60%", d: "6 lignes" }, correct: "b", explanation: "" },
-            { id: "Q035", category: "Bootstrap", question: "Quelle classe crée un bouton bleu plein ?", options: { a: "btn-outline-primary", b: "btn-secondary", c: "btn-primary", d: "btn-info" }, correct: "c", explanation: "" },
-            { id: "Q036", category: "Bootstrap", question: "Quelle classe rend un bouton plus grand ?", options: { a: "btn-big", b: "btn-lg", c: "btn-xl", d: "btn-large" }, correct: "b", explanation: "" },
-            { id: "Q037", category: "Bootstrap", question: "Quelle classe désactive un lien ?", options: { a: "inactive", b: "disabled", c: "off", d: "hidden" }, correct: "b", explanation: "" },
-            { id: "Q038", category: "Bootstrap", question: "Quelle classe affiche un menu déroulant ?", options: { a: "dropdown", b: "select", c: "menu", d: "list" }, correct: "a", explanation: "" },
-            { id: "Q039", category: "Bootstrap", question: "Quelle classe définit une barre de progression ?", options: { a: "progress", b: "loading", c: "bar", d: "spinner" }, correct: "a", explanation: "" },
-            { id: "Q040", category: "Bootstrap", question: "container sert à :", options: { a: "Colorer la page", b: "Centrer et contenir le contenu", c: "Créer des colonnes", d: "Ajouter des animations" }, correct: "b", explanation: "" },
-            { id: "Q061", category: "Bootstrap", question: "Que fait la classe 'img-fluid' ?", options: { a: "Image fixe", b: "Image responsive (max-width: 100%)", c: "Image cachée", d: "Image centrée uniquement" }, correct: "b", explanation: "" },
-            { id: "Q062", category: "Bootstrap", question: "Que produit 'btn btn-primary' ?", options: { a: "Bouton gris", b: "Bouton bleu plein", c: "Bouton contour", d: "Texte simple" }, correct: "b", explanation: "" },
-            { id: "Q063", category: "Bootstrap", question: "Que fait 'btn btn-outline-danger' ?", options: { a: "Bouton rouge plein", b: "Bouton rouge avec contour uniquement", c: "Bouton vert", d: "Bouton invisible" }, correct: "b", explanation: "" },
-            { id: "Q064", category: "Bootstrap", question: "Que signifie 'col-md-6 col-sm-12' ?", options: { a: "Toujours 50%", b: "Toujours 100%", c: "100% sur mobile, 50% sur moyen écran", d: "Caché" }, correct: "c", explanation: "" },
-            { id: "Q065", category: "Bootstrap", question: "Que produit le code 'progress-bar bg-success' ?", options: { a: "Barre rouge", b: "Barre verte", c: "Barre vide", d: "Erreur Bootstrap" }, correct: "b", explanation: "" },
-            { id: "Q066", category: "Bootstrap", question: "Que fait la classe 'dropdown-item disabled' ?", options: { a: "Lien actif", b: "Lien supprimé", c: "Lien désactivé (non cliquable)", d: "Lien caché" }, correct: "c", explanation: "" },
+<script>
+    // ==========================================================
+    // 100 QUESTIONS UNIQUES (SANS DOUBLONS)
+    // ==========================================================
+    const allQuestions = [
+        // --- FLEXBOX (20 Questions) ---
+        { category: "Flexbox", question: "Quel est l’axe principal par défaut ?", options: {a: "Vertical", b: "Horizontal (row)", c: "Diagonale"}, correct: "b", explanation: "flex-direction est 'row' par défaut." },
+        { category: "Flexbox", question: "Comment passer l'axe principal en vertical ?", options: {a: "flex-wrap: wrap", b: "display: block", c: "flex-direction: column"}, correct: "c", explanation: "" },
+        { category: "Flexbox", question: "Quelle propriété aligne sur l'axe principal ?", options: {a: "align-items", b: "justify-content", c: "align-content"}, correct: "b", explanation: "" },
+        { category: "Flexbox", question: "Quelle propriété aligne sur l'axe secondaire (croisé) ?", options: {a: "align-items", b: "justify-content", c: "flex-grow"}, correct: "a", explanation: "" },
+        { category: "Flexbox", question: "Quelle valeur de justify-content colle tout à la fin ?", options: {a: "flex-start", b: "center", c: "flex-end"}, correct: "c", explanation: "" },
+        { category: "Flexbox", question: "Comment autoriser les éléments à passer à la ligne ?", options: {a: "flex-wrap: wrap", b: "flex-line: new", c: "display: grid"}, correct: "a", explanation: "" },
+        { category: "Flexbox", question: "Quelle valeur de justify-content met un espace égal AUTOUR de chaque élément ?", options: {a: "space-between", b: "space-around", c: "space-evenly"}, correct: "b", explanation: "Double espace entre les éléments qu'aux bords." },
+        { category: "Flexbox", question: "Quelle propriété est un raccourci de flex-direction et flex-wrap ?", options: {a: "flex-flow", b: "flex-group", c: "flex-all"}, correct: "a", explanation: "Ex: flex-flow: row wrap;" },
+        { category: "Flexbox", question: "align-items: center centre-t-il horizontalement en mode row ?", options: {a: "Oui", b: "Non"}, correct: "b", explanation: "Non, il centre verticalement (axe secondaire). C'est justify-content qui centre horizontalement." },
+        { category: "Flexbox", question: "Comment centrer un élément parfaitement (H et V) ?", options: {a: "justify-content: center", b: "align-items: center", c: "Les deux"}, correct: "c", explanation: "" },
+        { category: "Flexbox", question: "Quelle propriété définit si un élément doit grandir ?", options: {a: "flex-grow", b: "flex-shrink", c: "flex-basis"}, correct: "a", explanation: "" },
+        { category: "Flexbox", question: "Quelle est la valeur par défaut de flex-shrink ?", options: {a: "0 (ne rétrécit pas)", b: "1 (rétrécit)", c: "Auto"}, correct: "b", explanation: "Par défaut, les éléments rétrécissent pour ne pas dépasser." },
+        { category: "Flexbox", question: "Quelle propriété définit la taille idéale initiale ?", options: {a: "width", b: "flex-basis", c: "min-width"}, correct: "b", explanation: "Prioritaire sur width dans un flex." },
+        { category: "Flexbox", question: "flex: 1 est un raccourci pour :", options: {a: "flex-grow: 1, shrink: 1, basis: 0%", b: "flex-grow: 0", c: "flex-basis: 100%"}, correct: "a", explanation: "Cela force l'élément à prendre tout l'espace disponible." },
+        { category: "Flexbox", question: "Comment changer l'ordre visuel d'un élément ?", options: {a: "z-index", b: "order", c: "position"}, correct: "b", explanation: "Ex: order: -1 le met en premier." },
+        { category: "Flexbox", question: "align-self sert à :", options: {a: "Aligner tout le conteneur", b: "Surcharger l'alignement d'un seul enfant", c: "Aligner le texte"}, correct: "b", explanation: "" },
+        { category: "Flexbox", question: "Quelle propriété gère l'espace entre les éléments (moderne) ?", options: {a: "margin", b: "gap", c: "space"}, correct: "b", explanation: "Fonctionne maintenant sur Flexbox et Grid." },
+        { category: "Flexbox", question: "align-content ne fonctionne que si :", options: {a: "Il y a une seule ligne", b: "flex-wrap: wrap est activé", c: "La hauteur est fixe"}, correct: "b", explanation: "Il gère l'espace entre les LIGNES multiples." },
+        { category: "Flexbox", question: "Que fait 'margin: auto' sur un enfant flex ?", options: {a: "Rien", b: "Il pousse les autres éléments au maximum", c: "Il centre le texte"}, correct: "b", explanation: "Technique puissante pour isoler un élément d'un côté." },
+        { category: "Flexbox", question: "La valeur par défaut de align-items est :", options: {a: "center", b: "flex-start", c: "stretch"}, correct: "c", explanation: "Les éléments s'étirent pour remplir la hauteur." },
 
-            // --- JAVASCRIPT / DOM ---
-            { id: "Q041", category: "JavaScript", question: "Quelle méthode sélectionne un élément par ID ?", options: { a: "getElementsById", b: "querySelector", c: "getElementById", d: "getId" }, correct: "c", explanation: "" },
-            { id: "Q042", category: "JavaScript", question: "Quelle méthode n’existe pas ?", options: { a: "getElementsByClassName", b: "getElementsByTagName", c: "getElementsByAttribute", d: "querySelector" }, correct: "c", explanation: "" },
-            { id: "Q043", category: "JavaScript", question: "Quel événement se déclenche à chaque frappe clavier ?", options: { a: "click", b: "change", c: "input", d: "submit" }, correct: "c", explanation: "L'événement 'input' est déclenché immédiatement après modification de la valeur." },
-            { id: "Q044", category: "JavaScript", question: "Que fait addEventListener ?", options: { a: "Supprime un élément", b: "Ajoute un événement", c: "Modifie le style", d: "Crée un élément" }, correct: "b", explanation: "" },
-            { id: "Q045", category: "JavaScript", question: "Quelle valeur est retournée ici ? 5 > 3 ? 'Oui' : 'Non'", options: { a: "true", b: "false", c: "Oui", d: "Non" }, correct: "c", explanation: "" },
-            { id: "Q046", category: "JavaScript", question: "Quelle méthode modifie le texte d’un élément ?", options: { a: "innerHTML", b: "textContent", c: "setText", d: "write" }, correct: "b", explanation: "textContent est plus sécurisé que innerHTML pour du texte simple." },
-            { id: "Q047", category: "JavaScript", question: "const signifie :", options: { a: "Variable modifiable", b: "Constante non réaffectable", c: "Fonction", d: "Objet" }, correct: "b", explanation: "" },
-            { id: "Q048", category: "JavaScript", question: "Quelle méthode supprime un élément ?", options: { a: "delete()", b: "remove()", c: "erase()", d: "clear()" }, correct: "b", explanation: "" },
-            { id: "Q049", category: "JavaScript", question: "Que fait console.log() ?", options: { a: "Affiche une alerte", b: "Écrit dans la page", c: "Affiche dans la console développeur", d: "Lance une erreur" }, correct: "c", explanation: "" },
-            { id: "Q050", category: "JavaScript", question: "Quel type est '123' (entre guillemets) ?", options: { a: "number", b: "string", c: "boolean", d: "object" }, correct: "b", explanation: "" },
-            { id: "Q067", category: "JavaScript", question: "Que fait document.getElementById('x'); ?", options: { a: "Sélection par classe", b: "Sélection par ID", c: "Supprime un élément", d: "Ajoute un événement" }, correct: "b", explanation: "" },
-            { id: "Q068", category: "JavaScript", question: "Que fait document.querySelector('p'); ?", options: { a: "Sélectionne tous les <p>", b: "Sélectionne le PREMIER <p> trouvé", c: "Supprime <p>", d: "Crée <p>" }, correct: "b", explanation: "" },
-            { id: "Q069", category: "JavaScript", question: "Que fait element.addEventListener('click', fn); ?", options: { a: "Supprime l’élément", b: "Ajoute un écouteur d'événement au clic", c: "Change le style", d: "Recharge la page" }, correct: "b", explanation: "" },
-            { id: "Q070", category: "JavaScript", question: "Que fait element.textContent = 'Hello'; ?", options: { a: "Ajoute du HTML", b: "Modifie le texte contenu dans l'élément", c: "Supprime l’élément", d: "Ajoute une classe" }, correct: "b", explanation: "" },
-            { id: "Q071", category: "JavaScript", question: "Résultat affiché ? console.log(5 > 10 ? 'A' : 'B');", options: { a: "A", b: "B", c: "true", d: "false" }, correct: "b", explanation: "5 n'est pas supérieur à 10, donc c'est la valeur après les deux-points." },
-            { id: "Q072", category: "JavaScript", question: "Quelle méthode n’existe pas dans le DOM standard ?", options: { a: "Correcte", b: "document.getElementsByAttribute('id')", c: "Dépréciée", d: "Asynchrone" }, correct: "b", explanation: "On utilise querySelector('[id=...]') ou getElementById à la place." },
-            { id: "Q073", category: "JavaScript", question: "Quand se déclenche l'événement 'input' ?", options: { a: "Au clic", b: "À chaque saisie de caractère", c: "Efface le champ", d: "Désactive l’input" }, correct: "b", explanation: "" },
-            { id: "Q074", category: "JavaScript", question: "Que fait element.remove(); ?", options: { a: "Cache l’élément", b: "Supprime l’élément du DOM", c: "Vide le texte", d: "Change la couleur" }, correct: "b", explanation: "" },
-            { id: "Q075", category: "JavaScript", question: "Quel est le résultat de : typeof '123' ?", options: { a: "number", b: "string", c: "boolean", d: "object" }, correct: "b", explanation: "" },
-            { id: "Q076", category: "JavaScript", question: "Que signifie const x = 10; ?", options: { a: "Variable modifiable", b: "Constante (référence non réaffectable)", c: "Fonction", d: "Objet" }, correct: "b", explanation: "" }
-        ];
+        // --- CSS GRID (20 Questions) ---
+        { category: "Grid", question: "Quelle propriété définit les colonnes ?", options: {a: "grid-rows", b: "grid-template-columns", c: "grid-cols"}, correct: "b", explanation: "" },
+        { category: "Grid", question: "Quelle unité représente une fraction de l'espace libre ?", options: {a: "%", b: "px", c: "fr"}, correct: "c", explanation: "" },
+        { category: "Grid", question: "repeat(3, 1fr) crée :", options: {a: "3 colonnes égales", b: "1 colonne de 3fr", c: "3 lignes"}, correct: "a", explanation: "" },
+        { category: "Grid", question: "Comment faire en sorte qu'un élément prenne 2 colonnes ?", options: {a: "grid-width: 2", b: "grid-column: span 2", c: "colspan: 2"}, correct: "b", explanation: "" },
+        { category: "Grid", question: "Quelle fonction permet de définir une taille min et max ?", options: {a: "clamp()", b: "minmax()", c: "range()"}, correct: "b", explanation: "Ex: minmax(100px, 1fr)." },
+        { category: "Grid", question: "Quel mot-clé remplit la grille automatiquement ?", options: {a: "auto-fill", b: "auto-fit", c: "Les deux"}, correct: "c", explanation: "Ils ont des nuances, mais servent tous deux au responsive sans media queries." },
+        { category: "Grid", question: "Quelle propriété gère l'espace entre colonnes et lignes ?", options: {a: "margin", b: "gap", c: "gutter"}, correct: "b", explanation: "" },
+        { category: "Grid", question: "Comment nommer des zones dans la grille ?", options: {a: "grid-template-areas", b: "grid-names", c: "grid-zones"}, correct: "a", explanation: "" },
+        { category: "Grid", question: "Pour placer un élément dans une zone nommée, on utilise :", options: {a: "grid-place", b: "grid-area", c: "area"}, correct: "b", explanation: "" },
+        { category: "Grid", question: "Quelle propriété aligne le contenu DANS la cellule (horizontalement) ?", options: {a: "justify-items", b: "align-items", c: "justify-content"}, correct: "a", explanation: "justify-content aligne toute la grille, justify-items aligne le contenu de la cellule." },
+        { category: "Grid", question: "Quelle propriété définit la hauteur des lignes implicites ?", options: {a: "grid-template-rows", b: "grid-auto-rows", c: "line-height"}, correct: "b", explanation: "Pour les éléments qui s'ajoutent automatiquement." },
+        { category: "Grid", question: "start, end, center, stretch sont des valeurs pour :", options: {a: "L'alignement", b: "La taille", c: "La couleur"}, correct: "a", explanation: "" },
+        { category: "Grid", question: "Grid est un système :", options: {a: "Unidimensionnel", b: "Bidimensionnel"}, correct: "b", explanation: "Il gère lignes et colonnes en même temps (contrairement à Flex)." },
+        { category: "Grid", question: "Le raccourci 'grid-column: 1 / 3' signifie :", options: {a: "Commence ligne 1, finit ligne 3", b: "Colonne 1 et colonne 3", c: "1 colonne sur 3"}, correct: "a", explanation: "Cela couvre donc la colonne 1 et 2 (s'arrête à la ligne de séparation 3)." },
+        { category: "Grid", question: "place-items est un raccourci pour :", options: {a: "align-items / justify-items", b: "top / left", c: "row / col"}, correct: "a", explanation: "" },
+        { category: "Grid", question: "Peut-on imbriquer (nester) des grilles ?", options: {a: "Non", b: "Oui", c: "Seulement 2 niveaux"}, correct: "b", explanation: "Un enfant d'une grille peut lui-même devenir display: grid." },
+        { category: "Grid", question: "grid-column-start: -1 signifie :", options: {a: "La première ligne", b: "La dernière ligne", c: "Erreur"}, correct: "b", explanation: "-1 compte depuis la fin." },
+        { category: "Grid", question: "Dense packing (grid-auto-flow: dense) sert à :", options: {a: "Serrer le texte", b: "Combler les trous vides", c: "Supprimer les marges"}, correct: "b", explanation: "La grille essaiera de remplir les espaces vides avec des éléments plus petits." },
+        { category: "Grid", question: "Quelle valeur aligne la grille verticalement dans le conteneur ?", options: {a: "align-content", b: "align-items", c: "justify-content"}, correct: "a", explanation: "" },
+        { category: "Grid", question: "L'unité 'fr' peut-elle être décimale (ex: 1.5fr) ?", options: {a: "Oui", b: "Non"}, correct: "a", explanation: "" },
 
-        // --- ETAT DE L'APPLICATION ---
-        let currentCategory = "";
-        let filteredQuestions = [];
-        let currentIndex = 0;
-        let score = 0;
-        let answeredCount = 0;
+        // --- BOOTSTRAP 5 (20 Questions) ---
+        { category: "Bootstrap", question: "Quelle classe crée un conteneur responsive centré ?", options: {a: ".box", b: ".container", c: ".wrapper"}, correct: "b", explanation: "" },
+        { category: "Bootstrap", question: "Combien de colonnes comporte le système de grille ?", options: {a: "10", b: "12", c: "16"}, correct: "b", explanation: "" },
+        { category: "Bootstrap", question: "Pour une colonne de 50% sur PC (large) :", options: {a: "col-6", b: "col-lg-6", c: "col-md-50"}, correct: "b", explanation: "lg = large screen." },
+        { category: "Bootstrap", question: "Quelle classe ajoute une marge interne (padding) de niveau 3 partout ?", options: {a: "m-3", b: "p-3", c: "pad-3"}, correct: "b", explanation: "" },
+        { category: "Bootstrap", question: "Que signifie 'mt-5' ?", options: {a: "Margin Top 5", b: "Margin Text 5", c: "More Top"}, correct: "a", explanation: "m=margin, t=top." },
+        { category: "Bootstrap", question: "Quelle classe centre le texte ?", options: {a: "text-center", b: "align-center", c: "font-center"}, correct: "a", explanation: "" },
+        { category: "Bootstrap", question: "Quelle couleur correspond à 'btn-danger' ?", options: {a: "Jaune", b: "Rouge", c: "Vert"}, correct: "b", explanation: "" },
+        { category: "Bootstrap", question: "Quelle couleur correspond à 'btn-success' ?", options: {a: "Bleu", b: "Vert", c: "Rouge"}, correct: "b", explanation: "" },
+        { category: "Bootstrap", question: "Quelle classe rend une image responsive ?", options: {a: "img-responsive", b: "img-fluid", c: "img-auto"}, correct: "b", explanation: "max-width: 100% et height: auto." },
+        { category: "Bootstrap", question: "Comment cacher un élément sur mobile uniquement ?", options: {a: "d-none d-sm-block", b: "d-mobile-none", c: "hide-xs"}, correct: "a", explanation: "Caché par défaut (d-none), puis affiché à partir de sm (small)." },
+        { category: "Bootstrap", question: "Quelle classe active Flexbox sur un élément ?", options: {a: "display-flex", b: "d-flex", c: "flex"}, correct: "b", explanation: "" },
+        { category: "Bootstrap", question: "Comment mettre les éléments Flex au bout (droite) ?", options: {a: "justify-content-end", b: "text-right", c: "align-right"}, correct: "a", explanation: "Utilisé avec d-flex." },
+        { category: "Bootstrap", question: "Composant pour une barre de navigation ?", options: {a: ".navbar", b: ".menu", c: ".nav-bar"}, correct: "a", explanation: "" },
+        { category: "Bootstrap", question: "Composant pour une boîte avec titre, contenu, pied ?", options: {a: ".box", b: ".card", c: ".container"}, correct: "b", explanation: "Le composant Card est central en Bootstrap." },
+        { category: "Bootstrap", question: "Quelle classe pour une ombre ?", options: {a: "shadow", b: "shade", c: "dark-box"}, correct: "a", explanation: "" },
+        { category: "Bootstrap", question: "Quelle classe rend un tableau joli ?", options: {a: "table", b: "pretty-table", c: "tab"}, correct: "a", explanation: "La classe de base .table." },
+        { category: "Bootstrap", question: "Quelle classe arrondit les coins ?", options: {a: "circle", b: "rounded", c: "curved"}, correct: "b", explanation: "" },
+        { category: "Bootstrap", question: "Quelle classe rend un bouton transparent avec bordure ?", options: {a: "btn-clear", b: "btn-outline-primary", c: "btn-empty"}, correct: "b", explanation: "" },
+        { category: "Bootstrap", question: "Quelle classe met un élément en 'display: none' ?", options: {a: "d-none", b: "hidden", c: "invisible"}, correct: "a", explanation: "Invisible garde la place, d-none retire du flux." },
+        { category: "Bootstrap", question: "Les breakpoints sont (dans l'ordre) :", options: {a: "xs, sm, md, lg, xl, xxl", b: "s, m, l, xl", c: "mobile, tablet, desktop"}, correct: "a", explanation: "" },
 
-        // --- INITIALISATION ---
-        function init() {
-            renderCategories();
-            // Sélectionner la première catégorie par défaut si disponible
-            const categories = [...new Set(allQuestions.map(q => q.category))];
-            if (categories.length > 0) {
-                filterQuestions(categories[0]);
-            }
+        // --- JAVASCRIPT & DOM (25 Questions) ---
+        { category: "JavaScript", question: "Comment déclarer une constante ?", options: {a: "var", b: "let", c: "const"}, correct: "c", explanation: "" },
+        { category: "JavaScript", question: "Quelle variable a une portée de bloc ?", options: {a: "var", b: "let", c: "global"}, correct: "b", explanation: "Contrairement à var qui a une portée de fonction." },
+        { category: "JavaScript", question: "Sélectionner un élément par ID :", options: {a: "querySelector('#id')", b: "getElementById('id')", c: "Les deux"}, correct: "c", explanation: "" },
+        { category: "JavaScript", question: "Sélectionner TOUS les éléments d'une classe :", options: {a: "querySelector", b: "querySelectorAll", c: "getAll"}, correct: "b", explanation: "Retourne une NodeList." },
+        { category: "JavaScript", question: "Comment écouter un clic ?", options: {a: "onClick(...)", b: "addEventListener('click', ...)", c: "listen('click')"}, correct: "b", explanation: "La méthode recommandée moderne." },
+        { category: "JavaScript", question: "Quelle propriété change le texte d'un élément ?", options: {a: "innerHTML", b: "textContent", c: "value"}, correct: "b", explanation: "Plus sécurisé que innerHTML." },
+        { category: "JavaScript", question: "Comment ajouter une classe CSS en JS ?", options: {a: "element.class = 'new'", b: "element.classList.add('new')", c: "element.addClass('new')"}, correct: "b", explanation: "" },
+        { category: "JavaScript", question: "Quelle méthode transforme un objet en texte JSON ?", options: {a: "JSON.parse()", b: "JSON.stringify()", c: "JSON.toString()"}, correct: "b", explanation: "" },
+        { category: "JavaScript", question: "Quelle méthode transforme du texte JSON en objet ?", options: {a: "JSON.parse()", b: "JSON.stringify()", c: "JSON.object()"}, correct: "a", explanation: "" },
+        { category: "JavaScript", question: "Quel événement détecte la frappe au clavier ?", options: {a: "click", b: "input", c: "hover"}, correct: "b", explanation: "" },
+        { category: "JavaScript", question: "Comment empêcher le rechargement d'un formulaire ?", options: {a: "event.stop()", b: "event.preventDefault()", c: "return false"}, correct: "b", explanation: "" },
+        { category: "JavaScript", question: "Quelle boucle parcourt un tableau ?", options: {a: "forEach", b: "loop", c: "repeat"}, correct: "a", explanation: "" },
+        { category: "JavaScript", question: "Que retourne '2' + 2 ?", options: {a: "4", b: "'22'", c: "Erreur"}, correct: "b", explanation: "Concaténation car le premier est une chaîne." },
+        { category: "JavaScript", question: "Que signifie '===' ?", options: {a: "Égalité stricte (valeur et type)", b: "Attribution", c: "Égalité souple"}, correct: "a", explanation: "Toujours préférer === à ==." },
+        { category: "JavaScript", question: "Comment stocker une donnée dans le navigateur durablement ?", options: {a: "localStorage", b: "sessionStorage", c: "cookies"}, correct: "a", explanation: "Reste même après fermeture du navigateur." },
+        { category: "JavaScript", question: "Quelle fonction permet d'attendre (délai) ?", options: {a: "setInterval", b: "setTimeout", c: "wait"}, correct: "b", explanation: "" },
+        { category: "JavaScript", question: "Quelle méthode permet de faire des requêtes HTTP (AJAX) moderne ?", options: {a: "xmlHttpRequest", b: "fetch", c: "get"}, correct: "b", explanation: "Retourne une Promesse." },
+        { category: "JavaScript", question: "Comment écrire une fonction fléchée ?", options: {a: "function() {}", b: "() => {}", c: "=> ()"}, correct: "b", explanation: "Syntaxe ES6." },
+        { category: "JavaScript", question: "`Bonjour ${name}` est :", options: {a: "Une erreur", b: "Une Template String", c: "Une concaténation"}, correct: "b", explanation: "Utilise les backticks ``." },
+        { category: "JavaScript", question: "Dans un tableau, `push()` ajoute :", options: {a: "Au début", b: "À la fin", c: "Au milieu"}, correct: "b", explanation: "" },
+        { category: "JavaScript", question: "Dans un tableau, `map()` sert à :", options: {a: "Filtrer", b: "Transformer chaque élément", c: "Trouver un élément"}, correct: "b", explanation: "Crée un nouveau tableau modifié." },
+        { category: "JavaScript", question: "Le mot clé `this` dans une fonction fléchée représente :", options: {a: "L'élément cliqué", b: "Le contexte parent (lexical)", c: "Window"}, correct: "b", explanation: "Différence majeure avec les fonctions classiques." },
+        { category: "JavaScript", question: "Comment convertir '100' (string) en nombre ?", options: {a: "parseInt('100')", b: "Number('100')", c: "Les deux"}, correct: "c", explanation: "" },
+        { category: "JavaScript", question: "Quelle valeur est 'Falsy' ?", options: {a: "1", b: "'false'", c: "0"}, correct: "c", explanation: "0, null, undefined, '', false sont falsy." },
+        { category: "JavaScript", question: "console.log(typeof []) retourne :", options: {a: "'array'", b: "'object'", c: "'list'"}, correct: "b", explanation: "En JS, les tableaux sont des objets." },
+
+        // --- HTML / WEB (15 Questions) ---
+        { category: "Web General", question: "Quelle balise est sémantique pour le contenu principal ?", options: {a: "<div id='main'>", b: "<main>", c: "<section>"}, correct: "b", explanation: "" },
+        { category: "Web General", question: "Quelle balise sert à faire un lien ?", options: {a: "<link>", b: "<a>", c: "<href>"}, correct: "b", explanation: "Anchor tag." },
+        { category: "Web General", question: "Attribut obligatoire pour l'accessibilité d'une image ?", options: {a: "src", b: "alt", c: "title"}, correct: "b", explanation: "Texte alternatif pour les non-voyants." },
+        { category: "Web General", question: "Que signifie HTTP ?", options: {a: "HyperText Transfer Protocol", b: "Html Transfer Process", c: "Hosting Text Page"}, correct: "a", explanation: "" },
+        { category: "Web General", question: "Code 404 signifie :", options: {a: "Succès", b: "Non trouvé", c: "Erreur serveur"}, correct: "b", explanation: "" },
+        { category: "Web General", question: "Code 200 signifie :", options: {a: "OK (Succès)", b: "Redirection", c: "Erreur"}, correct: "a", explanation: "" },
+        { category: "Web General", question: "Quelle balise crée une liste à puces ?", options: {a: "<ol>", b: "<ul>", c: "<list>"}, correct: "b", explanation: "Unordered List." },
+        { category: "Web General", question: "Où place-t-on la balise <title> ?", options: {a: "<body>", b: "<head>", c: "<footer>"}, correct: "b", explanation: "" },
+        { category: "Web General", question: "Quelle balise charge un fichier CSS ?", options: {a: "<script>", b: "<style>", c: "<link>"}, correct: "c", explanation: "<link rel='stylesheet' href='...'>" },
+        { category: "Web General", question: "Quelle balise charge un fichier JS ?", options: {a: "<script>", b: "<js>", c: "<link>"}, correct: "a", explanation: "" },
+        { category: "Web General", question: "Input type pour un mot de passe ?", options: {a: "text", b: "secure", c: "password"}, correct: "c", explanation: "Masque les caractères." },
+        { category: "Web General", question: "Quel attribut rend un champ de formulaire obligatoire ?", options: {a: "mandatory", b: "required", c: "need"}, correct: "b", explanation: "" },
+        { category: "Web General", question: "Quelle balise structure un article indépendant ?", options: {a: "<div>", b: "<article>", c: "<section>"}, correct: "b", explanation: "Sémantique." },
+        { category: "Web General", question: "Doctype sert à :", options: {a: "Lier le CSS", b: "Indiquer la version HTML au navigateur", c: "Rien"}, correct: "b", explanation: "<!DOCTYPE html> pour HTML5." },
+        { category: "Web General", question: "La balise <nav> sert à :", options: {a: "Naviguer sur internet", b: "Définir les liens de navigation du site", c: "Afficher une carte"}, correct: "b", explanation: "" }
+    ];
+
+    // ==========================================================
+    // LOGIQUE
+    // ==========================================================
+    let currentCategory = "";
+    let filteredQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+
+    function init() {
+        const categories = [...new Set(allQuestions.map(q => q.category))];
+        const btnContainer = document.getElementById('category-list');
+        
+        categories.forEach(cat => {
+            const count = allQuestions.filter(q => q.category === cat).length;
+            const btn = document.createElement('button');
+            btn.className = 'category-btn';
+            btn.innerHTML = `<span>${cat}</span> <b>${count}</b>`;
+            btn.onclick = () => loadCategory(cat);
+            btnContainer.appendChild(btn);
+        });
+
+        // Charger la première catégorie
+        loadCategory(categories[0]);
+    }
+
+    function loadCategory(cat) {
+        currentCategory = cat;
+        // Reset
+        filteredQuestions = allQuestions.filter(q => q.category === cat);
+        currentIndex = 0;
+        score = 0;
+        
+        // UI Updates
+        document.getElementById('category-badge').innerText = cat;
+        document.getElementById('score-box').innerText = "Score: 0";
+        document.querySelectorAll('.category-btn').forEach(b => {
+            b.classList.remove('active');
+            if(b.innerHTML.includes(cat)) b.classList.add('active');
+        });
+
+        showQuestion();
+    }
+
+    function showQuestion() {
+        const footer = document.getElementById('footer');
+        footer.classList.remove('visible');
+        
+        if(currentIndex >= filteredQuestions.length) {
+            finishQuiz();
+            return;
         }
 
-        // 1. Gérer les catégories (Menu de gauche)
-        function renderCategories() {
-            const categories = [...new Set(allQuestions.map(q => q.category))];
-            const container = document.getElementById('category-list');
-            
-            container.innerHTML = "";
-            categories.forEach(cat => {
-                const btn = document.createElement('button');
-                btn.className = 'category-btn';
-                if (cat === currentCategory) btn.classList.add('active');
-                
-                // Compter les questions pour cette catégorie
-                const count = allQuestions.filter(q => q.category === cat).length;
-                btn.innerHTML = `${cat} <small style="float:right; opacity:0.7">(${count})</small>`;
-                
-                btn.onclick = () => {
-                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    filterQuestions(cat);
-                };
-                container.appendChild(btn);
+        const q = filteredQuestions[currentIndex];
+        document.getElementById('question-text').innerText = `${currentIndex + 1}. ${q.question}`;
+        
+        const container = document.getElementById('options-container');
+        container.innerHTML = "";
+
+        // Génération des boutons
+        for (const [key, value] of Object.entries(q.options)) {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = value;
+            btn.onclick = () => checkAnswer(key, q, btn);
+            container.appendChild(btn);
+        }
+    }
+
+    function checkAnswer(selectedKey, questionObj, btn) {
+        // Bloquer tous les boutons
+        document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+        const isCorrect = selectedKey === questionObj.correct;
+        if(isCorrect) {
+            btn.classList.add('correct');
+            score++;
+        } else {
+            btn.classList.add('incorrect');
+            // Trouver et colorer la bonne réponse
+            const buttons = document.querySelectorAll('.option-btn');
+            // Astuce simple : on retrouve le bouton par son texte
+            const correctText = questionObj.options[questionObj.correct];
+            buttons.forEach(b => {
+                if(b.innerText === correctText) b.classList.add('correct');
             });
         }
 
-        // 2. Filtrer les questions et Reset
-        function filterQuestions(category) {
-            currentCategory = category;
-            document.getElementById('current-category').innerText = category;
-            
-            // Mélanger les questions
-            filteredQuestions = allQuestions.filter(q => q.category === category)
-                                            .sort(() => Math.random() - 0.5);
-            
-            currentIndex = 0;
-            score = 0;
-            answeredCount = 0;
-            
-            // Mettre à jour la classe active dans le menu
-            const allBtns = document.querySelectorAll('.category-btn');
-            allBtns.forEach(btn => {
-                if(btn.innerText.includes(category)) btn.classList.add('active');
-                else btn.classList.remove('active');
-            });
-
-            loadQuestion();
+        document.getElementById('score-box').innerText = `Score: ${score}`;
+        
+        // Afficher explication
+        const footer = document.getElementById('footer');
+        const exp = document.getElementById('explanation');
+        exp.innerHTML = isCorrect ? "✅ <b>Bonne réponse !</b>" : "❌ <b>Mauvaise réponse.</b>";
+        if(questionObj.explanation) {
+            exp.innerHTML += `<br><small>${questionObj.explanation}</small>`;
         }
+        footer.classList.add('visible');
+    }
 
-        // 3. Charger une question à l'écran
-        function loadQuestion() {
-            // Reset UI
-            document.getElementById('quiz-footer').classList.remove('visible');
-            const container = document.getElementById('options-container');
-            container.innerHTML = "";
-            document.getElementById('explanation-text').innerHTML = "";
+    function nextQuestion() {
+        currentIndex++;
+        showQuestion();
+    }
 
-            if (currentIndex >= filteredQuestions.length) {
-                showResults();
-                return;
-            }
+    function finishQuiz() {
+        document.getElementById('question-text').innerText = "Terminé ! 🎉";
+        document.getElementById('options-container').innerHTML = `
+            <div style="text-align:center; padding:20px;">
+                <h2>Score final : ${score} / ${filteredQuestions.length}</h2>
+                <button class="next-btn" style="float:none" onclick="loadCategory('${currentCategory}')">Recommencer</button>
+            </div>
+        `;
+        document.getElementById('footer').classList.remove('visible');
+    }
 
-            const q = filteredQuestions[currentIndex];
-            document.getElementById('question-text').innerText = `${currentIndex + 1}. ${q.question}`;
-            document.getElementById('score-display').innerText = `Score: ${score} / ${answeredCount}`;
+    // Lancer
+    init();
 
-            // Créer les boutons d'options
-            for (const [key, value] of Object.entries(q.options)) {
-                if(value) { 
-                    const btn = document.createElement('button');
-                    btn.className = 'option-btn';
-                    btn.innerHTML = `<strong>${key.toUpperCase()}.</strong> ${value}`;
-                    btn.onclick = () => checkAnswer(key, q.correct, q.explanation, btn);
-                    container.appendChild(btn);
-                }
-            }
-        }
-
-        // 4. Vérifier la réponse
-        function checkAnswer(selectedKey, correctKey, explanation, btnElement) {
-            // Désactiver tous les boutons
-            const allBtns = document.querySelectorAll('.option-btn');
-            allBtns.forEach(btn => btn.disabled = true);
-
-            answeredCount++;
-
-            if (selectedKey === correctKey) {
-                score++;
-                btnElement.classList.add('correct');
-            } else {
-                btnElement.classList.add('incorrect');
-                // Surligner la bonne réponse
-                allBtns.forEach(btn => {
-                    if (btn.innerText.startsWith(correctKey.toUpperCase() + '.')) {
-                        btn.classList.add('correct');
-                    }
-                });
-            }
-
-            // Mettre à jour le score
-            document.getElementById('score-display').innerText = `Score: ${score} / ${answeredCount}`;
-
-            // Afficher l'explication
-            const footer = document.getElementById('quiz-footer');
-            const expText = document.getElementById('explanation-text');
-            
-            expText.innerHTML = explanation ? `💡 <strong>Note :</strong> ${explanation}` : "";
-            footer.classList.add('visible');
-        }
-
-        // 5. Question suivante
-        function nextQuestion() {
-            currentIndex++;
-            loadQuestion();
-        }
-
-        // 6. Fin de la catégorie
-        function showResults() {
-            document.getElementById('question-text').innerText = `Catégorie "${currentCategory}" terminée ! 🎉`;
-            document.getElementById('options-container').innerHTML = `
-                <div style="text-align:center; font-size: 1.2rem; padding: 20px;">
-                    <p>Votre score final :</p>
-                    <h1 style="font-size: 3rem; color: var(--primary); margin: 10px 0;">${score} / ${filteredQuestions.length}</h1>
-                    <p>${score > (filteredQuestions.length / 2) ? 'Bien joué ! 💪' : 'Continuez à réviser ! 📚'}</p>
-                    <button class="next-btn" style="margin-top:20px;" onclick="filterQuestions('${currentCategory}')">Recommencer cette catégorie</button>
-                </div>
-            `;
-            document.getElementById('quiz-footer').classList.remove('visible');
-            document.getElementById('score-display').innerText = "";
-        }
-
-        // Lancer l'app
-        init();
-    </script>
+</script>
 </body>
 </html>
